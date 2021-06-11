@@ -41,10 +41,11 @@ Forked from the great FreezyEx!
 Apprechiate all the help and support bro!
 
 */
-//      Tokenomics and distribution
-//      3% of every transacion is converted to BNB and sent to the IceMoonCharity wallet
-//      TO ENSURE WE MEET OUR GOALS WE WILL USE THIS 'CHARITY WALLET' TO FUND MARKETING UNTIL WE REACH 1K HOLDERS 
-//      WHEN WE REACH 1K HOLDERS ALL BNB IN THIS WALLET WILL BE SENT TO CHARITY TO AID THE HELP IN FIGHTING CLIMATE CHANGE!
+//      Tokenomics and distribution 12% total tax
+//      6% of every transacion is converted to BNB and sent to the IceMoonCharity wallet
+//      "TO ENSURE WE MEET OUR GOALS WE WILL USE THIS 'CHARITY WALLET' TO FUND MARKETING & DEVELOPMENT UNTIL WE REACH 1K HOLDERS 
+//      WHEN WE REACH 1K HOLDERS 80% BNB IN THIS WALLET WILL BE SENT TO CHARITY AFTER CONVERTING TO FIAT, TO AID THE HELP IN FIGHTING CLIMATE CHANGE
+//      AND THE REMAING 20% WILL BE FOR MARKETING AND FUTURE DEVELOPMENT"
 //      3% of every transacion is burned!
 //      3% of every transaction is redistributed between holders of the coin!
 
@@ -498,7 +499,7 @@ contract IceMoonCharity is Context, IERC20, Ownable {
     uint256 private _previousBurnFee = _burnFee;
 
 
-    uint256 public _donationFee = 3;
+    uint256 public _donationFee = 6;
     uint256 private _previousDonationFee = _donationFee;
 
     uint256 public _maxTxAmount = 100 * 10**9 * 10**9;
