@@ -489,14 +489,14 @@ contract IceMoonCharity is Context, IERC20, Ownable {
     uint8 private _decimals = 9;
 
 
-    uint256 public _taxFee = 2;
+    uint256 public _taxFee = 3;
     uint256 private _previousTaxFee = _taxFee;
 
-    uint256 public _burnFee = 2;
+    uint256 public _burnFee = 3;
     uint256 private _previousBurnFee = _burnFee;
 
 
-    uint256 public _donationFee = 2;
+    uint256 public _donationFee = 3;
     uint256 private _previousDonationFee = _donationFee;
 
     uint256 public _maxTxAmount = 100 * 10**9 * 10**9;
@@ -854,19 +854,19 @@ contract IceMoonCharity is Context, IERC20, Ownable {
 
     function calculateTaxFee(uint256 _amount) private view returns (uint256) {
         return _amount.mul(_taxFee).div(
-            10**2
+            10**3
         );
     }
 
     function calculateBurnFee(uint256 _amount) private view returns (uint256) {
         return _amount.mul(_burnFee).div(
-            10**2
+            10**3
         );
     }
 
     function calculateLiquidityFee(uint256 _amount) private view returns (uint256) {
         return _amount.mul(_donationFee).div(
-            10**2
+            10**3
         );
     }
 
