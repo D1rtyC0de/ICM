@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: Unlicensed
-
 /*
 ██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
 █░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█
@@ -31,18 +30,21 @@
 █▀▀ █░░ ░▀░ █▀▄▀█ █▀▀█ ▀▀█▀▀ █▀▀ 　 █▀▀ █░░█ █▀▀█ █▀▀▄ █▀▀▀ █▀▀ 
 █░░ █░░ ▀█▀ █░▀░█ █▄▄█ ░░█░░ █▀▀ 　 █░░ █▀▀█ █▄▄█ █░░█ █░▀█ █▀▀ 
 ▀▀▀ ▀▀▀ ▀▀▀ ▀░░░▀ ▀░░▀ ░░▀░░ ▀▀▀ 　 ▀▀▀ ▀░░▀ ▀░░▀ ▀░░▀ ▀▀▀▀ ▀▀▀
+Published by D1-C0
 
 
 
-
+Forked from the great FreezyEx!
 █░░░█ ░▀░ ▀▀█▀▀ █░░█ 　 ▀▀█▀▀ █░░█ █▀▀█ █▀▀▄ █░█ █▀▀ 　 ▀▀█▀▀ █▀▀█ 　 █▀▀ █▀▀█ █▀▀ █▀▀ ▀▀█ █░░█ ▒█▀▀▀ █░█ 
 █▄█▄█ ▀█▀ ░░█░░ █▀▀█ 　 ░░█░░ █▀▀█ █▄▄█ █░░█ █▀▄ ▀▀█ 　 ░░█░░ █░░█ 　 █▀▀ █▄▄▀ █▀▀ █▀▀ ▄▀░ █▄▄█ ▒█▀▀▀ ▄▀▄ 
 ░▀░▀░ ▀▀▀ ░░▀░░ ▀░░▀ 　 ░░▀░░ ▀░░▀ ▀░░▀ ▀░░▀ ▀░▀ ▀▀▀ 　 ░░▀░░ ▀▀▀▀ 　 ▀░░ ▀░▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ▄▄▄█ ▒█▄▄▄ ▀░▀
-Apprechiate all the help bro!
+Apprechiate all the help and support bro!
 
 */
- 
-//      3% of every transacion is converted to BNB and sent to the IceMoonCharity fundation BSC wallet 
+//      Tokenomics and distribution
+//      3% of every transacion is converted to BNB and sent to the IceMoonCharity wallet
+//      TO ENSURE WE MEET OUR GOALS WE WILL USE THIS 'CHARITY WALLET' TO FUND MARKETING UNTIL WE REACH 1K HOLDERS 
+//      WHEN WE REACH 1K HOLDERS ALL BNB IN THIS WALLET WILL BE SENT TO CHARITY TO AID THE HELP IN FIGHTING CLIMATE CHANGE!
 //      3% of every transacion is burned!
 //      3% of every transaction is redistributed between holders of the coin!
 
