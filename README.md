@@ -743,34 +743,39 @@ contract IceMoonCharity is Context, IERC20, Ownable {
     address[] private _excluded;
    
     uint256 private constant MAX = ~uint256(0);
-    uint256 private _tTotal = 1000000000000 * 10**18;
+    uint256 private _tTotal = 1000000 * 10*6 * 10**18;
     uint256 private _rTotal = (MAX - (MAX % _tTotal));
     uint256 private _tFeeTotal;
 
     string private _name = "IceMoonCharity";
     string private _symbol = "iMOON";
-    uint8 private _decimals = 18;
+    uint8 private _decimals = 9;
     
-    uint256 public _taxFee = 2;
+    uint256 public _taxFee = 3;
     uint256 private _previousTaxFee = _taxFee;
     
-    uint256 public _liquidityFee = 3;
+    uint256 public _liquidityFee = 2;
     uint256 private _previousLiquidityFee = _liquidityFee;
 
-    uint256 public _burnFee = 1;
-    uint256 private _previousBurnFee = _burnFee;
+    uint256 public _teamFee = 2;
+    address public teamWallet = 0x3dB46fC19FcE196100eead216EB268db4D771AEf;
+    uint256 private _previousTeamFee = _teamFee;
 
-    uint256 public _charityFee = 6;
+    uint256 public _charityFee = 4;
     address public charityWallet = 0xF0B74F742DCe0dF10Bad87A883BC012A64C8e173;
     uint256 private _previouscharityFee = _charityFee;
+    
+    uint256 public _burnFee = 1;
+    uint256 private _previousBurnFee = _burnFee;
 
     IUniswapV2Router02 public  uniswapV2Router;
     address public  uniswapV2Pair;
     
     bool inSwapAndLiquify;
     bool public swapAndLiquifyEnabled = false;
-
-    uint256 private numTokensSellToAddToLiquidity = 8000 * 10**18;
+    
+    uint256 private maxTxAmount = _tTotal.mul(1).div(100);
+    uint256 private numTokensSellToAddToLiquidity = 100000000 * 10**18;
     
     event MinTokensBeforeSwapUpdated(uint256 minTokensBeforeSwap);
     event SwapAndLiquifyEnabledUpdated(bool enabled);
@@ -890,7 +895,6 @@ contract IceMoonCharity is Context, IERC20, Ownable {
     }
 
     function excludeFromReward(address account) public onlyOwner() {
-        require(account != 0x10ED43C718714eb63d5aA57B78B54704E256024E, 'We can not exclude Pancake router.');
         require(!_isExcluded[account], "Account is already excluded");
         if(_rOwned[account] > 0) {
             _tOwned[account] = tokenFromReflection(_rOwned[account]);
@@ -980,36 +984,38 @@ contract IceMoonCharity is Context, IERC20, Ownable {
     }
     
     function calculateTaxFee(uint256 _amount) private view returns (uint256) {
-        return _amount.mul(_taxFee).div(
-            10**2
-        );
+    return _amount.mul(_taxFee).div(10**2);
     }
 
     function calculateLiquidityFee(uint256 _amount) private view returns (uint256) {
+      
         return _amount.mul(_liquidityFee).div(
-            10**3
+            10**2
         );
     }
     
     function removeAllFee() private {
-        if(_taxFee == 0 && _liquidityFee == 0 && _charityFee==0 && _burnFee==0) return;
+        if(_taxFee == 0 && _liquidityFee == 0 && _charityFee==0 && _teamFee==0 && _burnFee == 0) return;
         
         _previousTaxFee = _taxFee;
         _previousLiquidityFee = _liquidityFee;
-        _previousBurnFee = _burnFee;
+        _previousTeamFee = _teamFee;
         _previouscharityFee = _charityFee;
+        _previousBurnFee = _burnFee;
         
         _taxFee = 0;
         _liquidityFee = 0;
         _charityFee = 0;
+        _teamFee = 0;
         _burnFee = 0;
     }
     
     function restoreAllFee() private {
        _taxFee = _previousTaxFee;
        _liquidityFee = _previousLiquidityFee;
-       _burnFee = _previousBurnFee;
+       _teamFee = _previousTeamFee;
        _charityFee = _previouscharityFee;
+       _burnFee = _previousBurnFee;
     }
     
     function isExcludedFromFee(address account) public view returns(bool) {
@@ -1049,7 +1055,7 @@ contract IceMoonCharity is Context, IERC20, Ownable {
             swapAndLiquify(contractTokenBalance);
         }
         
-        //transfer amount, it will take tax, burn, liquidity fee
+        //transfer amount, it will take tax, team, liquidity fee
         _tokenTransfer(from,to,amount);
     }
 
@@ -1111,39 +1117,39 @@ contract IceMoonCharity is Context, IERC20, Ownable {
 
     //this method is responsible for taking all fee, if takeFee is true
     function _tokenTransfer(address sender, address recipient, uint256 amount) private {
+       
         if(_isExcludedFromFee[sender] || _isExcludedFromFee[recipient]){
             removeAllFee();
         }
         
-        //Calculate burn amount and charity amount
-        uint256 burnAmt = amount.mul(_burnFee).div(100);
+        uint256 teamAmt = amount.mul(_teamFee).div(100);
         uint256 charityAmt = amount.mul(_charityFee).div(100);
-
+        uint256 burnAmt = amount.mul(_burnFee).div(100);
+    
         if (_isExcluded[sender] && !_isExcluded[recipient]) {
-            _transferFromExcluded(sender, recipient, (amount.sub(burnAmt).sub(charityAmt)));
+            _transferFromExcluded(sender, recipient, (amount.sub(teamAmt).sub(charityAmt).sub(burnAmt)));
         } else if (!_isExcluded[sender] && _isExcluded[recipient]) {
-            _transferToExcluded(sender, recipient, (amount.sub(burnAmt).sub(charityAmt)));
+            _transferToExcluded(sender, recipient, (amount.sub(teamAmt).sub(charityAmt).sub(burnAmt)));
         } else if (!_isExcluded[sender] && !_isExcluded[recipient]) {
-            _transferStandard(sender, recipient, (amount.sub(burnAmt).sub(charityAmt)));
+            _transferStandard(sender, recipient, (amount.sub(teamAmt).sub(charityAmt).sub(burnAmt)));
         } else if (_isExcluded[sender] && _isExcluded[recipient]) {
-            _transferBothExcluded(sender, recipient, (amount.sub(burnAmt).sub(charityAmt)));
+            _transferBothExcluded(sender, recipient, (amount.sub(teamAmt).sub(charityAmt).sub(burnAmt)));
         } else {
-            _transferStandard(sender, recipient, (amount.sub(burnAmt).sub(charityAmt)));
+            _transferStandard(sender, recipient, (amount.sub(teamAmt).sub(charityAmt).sub(burnAmt)));
         }
         
-        //Temporarily remove fees to transfer to burn address and charity wallet
+        //Temporarily remove fees to transfer to team address and charity wallet
         _taxFee = 0;
         _liquidityFee = 0;
-
-
+    
         _transferStandard(sender, address(0), burnAmt);
+        _transferStandard(sender, teamWallet, teamAmt);
         _transferStandard(sender, charityWallet, charityAmt);
-
+    
         //Restore tax and liquidity fees
         _taxFee = _previousTaxFee;
         _liquidityFee = _previousLiquidityFee;
-
-
+   
         if(_isExcludedFromFee[sender] || _isExcludedFromFee[recipient])
             restoreAllFee();
     }
@@ -1185,20 +1191,6 @@ contract IceMoonCharity is Context, IERC20, Ownable {
         _isExcludedFromFee[account] = false;
     }
     
-
-    function disableAllFees() external onlyOwner() {
-        _taxFee = 0;
-        _previousTaxFee = _taxFee;
-        _liquidityFee = 0;
-        _previousLiquidityFee = _liquidityFee;
-        _burnFee = 0;
-        _previousBurnFee = _taxFee;
-        _charityFee = 0;
-        _previouscharityFee = _charityFee;
-        inSwapAndLiquify = false;
-        emit SwapAndLiquifyEnabledUpdated(false);
-    }
-    
     function setcharityWallet(address newWallet) external onlyOwner() {
         charityWallet = newWallet;
     }
@@ -1215,8 +1207,8 @@ contract IceMoonCharity is Context, IERC20, Ownable {
         _charityFee = charityFee;
     }
     
-    function setBurnFeePercent(uint256 burnFee) external onlyOwner() {
-        _burnFee = burnFee;
+    function setTeamFeePercent(uint256 teamFee) external onlyOwner() {
+        _teamFee = teamFee;
     }
     
     //New Pancakeswap router version?
