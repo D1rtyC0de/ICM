@@ -41,13 +41,11 @@ Apprechiate all the help and support bro!
 
 */
 //      Tokenomics and distribution 12% total tax
-//      6% of every transacion is converted to BNB and sent to the IceMoonCharity wallet
-//      "TO ENSURE WE MEET OUR GOALS WE WILL USE THIS 'CHARITY WALLET' TO FUND MARKETING & DEVELOPMENT UNTIL WE REACH 1K HOLDERS 
-//      WHEN WE REACH 1K HOLDERS 80% BNB IN THIS WALLET WILL BE SENT TO CHARITY AFTER CONVERTING TO FIAT, TO AID THE HELP IN FIGHTING CLIMATE CHANGE
-//      AND THE REMAING 20% WILL BE FOR MARKETING AND FUTURE DEVELOPMENT"
-//      1% of every transacion is burned!
-//      2% is locked into LP!
-//      3% of every transaction is redistributed between holders of the coin!
+//      Charity 4%
+//      Holder Rewards 2%
+//      Auto Locking Liquidity 2%
+//      Marketing and Development team 2%
+//      Burn 1%
 
 
 pragma solidity 0.6.12;
